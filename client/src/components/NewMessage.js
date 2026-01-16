@@ -16,7 +16,12 @@ function NewMessage({ currentUser, onAddMessage }) {
         body: body,
       }),
     })
-      .then((r) => r.json())
+      .then(r => {
+        if (r.ok) {
+          return r.json()
+        }
+        throw r;
+      })
       .then((newMessage) => {
         onAddMessage(newMessage);
         setBody("");

@@ -13,9 +13,14 @@ function Message({ message, currentUser, onMessageDelete, onUpdateMessage }) {
   function handleDeleteClick() {
     fetch(`http://127.0.0.1:5555/messages/${id}`, {
       method: "DELETE",
-    });
-
-    onMessageDelete(id);
+    })
+      .then(r => {
+        if (r.ok) {
+          return r.json()
+        }
+        throw r;
+      })
+      .then(() => onMessageDelete(id));
   }
 
   function handleUpdateMessage(updatedMessage) {

@@ -15,7 +15,12 @@ function EditMessage({ id, body, onUpdateMessage }) {
         body: messageBody,
       }),
     })
-      .then((r) => r.json())
+      .then(r => {
+        if (r.ok) {
+          return r.json()
+        }
+        throw r;
+      })
       .then((updatedMessage) => onUpdateMessage(updatedMessage));
   }
 
