@@ -13,6 +13,10 @@ def client():
         db.drop_all()
 
 def test_get_messages(client):
+    # Clear any existing messages
+    Message.query.delete()
+    db.session.commit()
+
     # Create some test messages
     message1 = Message(username="Alice", body="Hello")
     message2 = Message(username="Bob", body="Hi there")
